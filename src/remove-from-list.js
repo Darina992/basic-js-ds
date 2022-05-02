@@ -11,50 +11,31 @@ const { ListNode } = require('../extensions/list-node.js');
  * @return {List}
  *
  * @example
-   For l = [3, 1, 2, 3, 4, 5] and k = 3,
+ * For l = [3, 1, 2, 3, 4, 5] and k = 3,
  * the output should be [1, 2, 4, 5]
  *
  * Singly - linked lists are already defined using interface
+ * class ListNode {
+ *   constructor(x) {
+ *     this.value = x;
+ *     this.next = null;
+ *   }
+ * }
+ */
+function removeKFromList(l, k) {
+    let array = [];
 
-  class ListNode {
-    constructor(x) {
-      this.value = x;
-      this.next = null;
+    while(l.next){
+      array.push(l.value);
+      l = l.next
     }
-  }**/
-
-  function removeKFromList(l, k) {
-    function arrayToList(array) {
-      let list = new ListNode(array[0]);
-
-      for (let i = array.length - 1; i > 0; i--) {
-        list.next = {value: array[i], next: list.next};
-      }
-      return list;
+    array.push(l.value);
+    array = array.filter(item => item !== k);
+    let list = null;
+    for (let i = array.length - 1; i >= 0; i--) {
+      list = {value: array[i], next: list};
     }
-
-    let list = arrayToList(l);
-
-    function remove(list, k){
-
-      let current = list;
-      while(current.value == k){
-        current.value = current.next.value;
-      }
-      while(current.next){
-        if(current.next.value === k){
-          current.next = current.next.next;
-        } else {
-          current = current.next
-        }
-      }
-   return list
-  }
-  let result = remove(list,k);
-  
-
-  return result
-
+    return list;
 }
 
 module.exports = {
